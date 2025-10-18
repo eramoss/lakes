@@ -1,0 +1,6 @@
+[submodule "image_unmagick"]
+	path = image_unmagick
+	url = https://github.com/eramoss/image_unmagick.git
+[submodule "rustlefeed"]
+	path = rustlefeed
+	url = https://github.com/eramoss/rustlefeed.git

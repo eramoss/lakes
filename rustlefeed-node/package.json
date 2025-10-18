@@ -1,0 +1,13 @@
+{
+  "name": "rustlefeed-node",
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "express": "^4.18.2",
+    "feedparser": "^2.2.10",
+    "request": "^2.88.2",
+    "sqlite3": "^5.1.6",
+    "uuid": "^9.0.0"
+  }
+}

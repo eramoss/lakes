@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="feed-style.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <title>Rustle Feed</title>
+</head>
+
+<body>
+  <div class="site-container">
+
+
+    <div id="content-container" class="feed-container">
+      <div id="feed-item">
+        <!-- Dynamic contents will be loaded here  -->
+      </div>
+
+      <button class="button-like" id="like">Like</button>
+      <button class="button-like" id="dislike">Dislike</button>
+    </div>
+    <aside class="feed-list">
+      <h2>Feeds</h2>
+      <div>
+        <input type="url" name="new-feed" id="new-feed-input">
+        <button id="add-feed-button">Add</button>
+      </div>
+      <ul id="feed-list">
+        <!-- Dynamic contents will be loaded here  -->
+      </ul>
+    </aside>
+  </div>
+  <script src="index.js"></script>
+</body>
+
+</html>
