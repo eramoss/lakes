@@ -1,3 +1,4 @@
 venv/
 rustlefeed-node/node_modules/
 rustlefeed-node/db/
+db/
