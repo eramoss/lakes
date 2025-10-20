@@ -29,7 +29,7 @@ export class NaiveBayesClassifier {
 
   classify(entry) {
     if (!this.isPrepared) return 1.0;
-
+		console.log("classifing: ", entry);
     const allContent = `${entry.title} ${entry.summary} ${entry.content} ${entry.author} ${entry.categories.join(' ')} ${entry.link}`.toLowerCase();
     const messageTokens = NaiveBayesClassifier.tokenize(allContent);
     const [probIfDislike, probIfLike] = this.probabilitiesOfMessage(messageTokens);

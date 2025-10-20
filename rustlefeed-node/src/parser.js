@@ -1,3 +1,14 @@
+function escapeHtml(str) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return str.replace(/[&<>"']/g, char => map[char]);
+}
+
 export function entryToHtml(entry) {
   const categories = Array.isArray(entry.categories) 
     ? entry.categories.join(', ') 
@@ -12,10 +23,4 @@ export function entryToHtml(entry) {
     <p class="feed-item-content">${entry.content}</p>
     <a class="feed-item-link" href="${escapeHtml(entry.link)}">Read more</a>
   `;
-}
-
-function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
 }

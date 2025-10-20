@@ -84,7 +84,7 @@ app.post('/delete-feed', async (req, res) => {
 
 app.get('/feeds', (req, res) => {
   const feeds = Array.from(manager.feeds.entries()).map(([url, feed]) => ({
-    title: feed.title || 'Untitled',
+    title: feed.title || url,
     url
   }));
   res.json(feeds);
@@ -109,3 +109,60 @@ process.on('SIGINT', () => {
   persistence.saveFeeds(manager);
   process.exit(0);
 });
+
+
+export async function seedDatabase() {
+  const sampleFeeds = [
+    'https://news.ycombinator.com/rss',
+		'https://stackoverflow.blog/feed/',
+		'http://feeds.bbci.co.uk/news/world/rss.xml',
+    'https://feeds.arstechnica.com/arstechnica/index',
+    'https://www.theverge.com/rss/index.xml'
+  ];
+
+  console.log('Seeding database with sample feeds...');
+  
+  for (const feedUrl of sampleFeeds) {
+    try {
+      console.log(`Adding feed: ${feedUrl}`);
+      await manager.newFeed(feedUrl);
+      console.log(`✓ Successfully added: ${feedUrl}`);
+    } catch (err) {
+      console.error(`✗ Failed to add ${feedUrl}:`, err.message);
+    }
+  }
+
+  persistence.saveFeeds(manager);
+  
+  // Generate training data by marking entries as liked/disliked
+  console.log('\nGenerating training data...');
+  const trainingDataSize = Math.min(150, manager.toSee.length);
+  
+  for (let i = 0; i < trainingDataSize; i++) {
+    if (manager.toSee.length === 0) break;
+    
+    const entry = manager.toSee.pop();
+    // Simulate user preference: like entries with certain keywords
+    const likeKeywords = ['ai', 'machine learning', 'javascript', 'node', 'tech', 'open source'];
+    const entryText = `${entry.title} ${entry.summary} ${entry.content}`.toLowerCase();
+    const isLiked = likeKeywords.some(keyword => entryText.includes(keyword));
+    
+    manager.alreadySeen.push([entry, isLiked]);
+    if ((i + 1) % 25 === 0) {
+      console.log(`Generated ${i + 1} training entries...`);
+    }
+  }
+
+  persistence.saveAlreadySeen(manager.alreadySeen);
+  console.log(`\nDatabase seeded with ${manager.alreadySeen.length} training entries!`);
+  console.log('Classifier is now ready to use.');
+  process.exit(0);
+}
+
+// Run seed if called with --seed flag
+if (process.argv[2] === '--seed') {
+  seedDatabase().catch(err => {
+    console.error('Seed failed:', err);
+    process.exit(1);
+  });
+}
