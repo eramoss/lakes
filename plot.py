@@ -300,13 +300,11 @@ if __name__ == "__main__":
     #                               'memory cost 100mb - windows',
      #                              'memorycost_100mb_win')
 
-    csv_files = ['process_metrics_image_unmagick_4th.csv', 
-                 'process_metrics_image_unmagick_8th.csv',
-                 'process_metrics_image_unmagick_16th.csv',
-                 'process_metrics_image_unmagick_32th.csv']
-    labels = ['4 threads', '8 threads', '16 threads', '32 threads']
+    csv_files = ['process_metrics_rustlefeed_linux_rust.csv', 
+                 'process_metrics_rustlefeed_linux_node.csv']
+    labels = ['linux rust', 'linux node']#, 'windows rust', 'windows node']
     analyzer.plot_comparison_bar(csv_files, labels, 
-                                 'image_unmagick - comparação de threads',
-                                 'image_unmagick', 
-                                 metric='vms_MB')
+                                 'rustlefeed - comparação de linguagem e sistema',
+                                 'rustlefeed', 
+                                 metric='rss_MB')
 
